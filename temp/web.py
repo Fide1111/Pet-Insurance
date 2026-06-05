@@ -167,6 +167,7 @@ plan_type = st.selectbox("Select Plan", ["", "Pet 1", "Pet 2", "Pet 3", "Pet Pre
 
 if plan_type == "Pet Premium":
     st.file_uploader("Please upload health check-up report")
+    st.warning("Will be approved once the report is reviewed by our underwriter, please contact FM for more information.")
 
 if plan_type != "":
     st.caption("Monthly Premium: xxx")
