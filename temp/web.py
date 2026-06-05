@@ -31,10 +31,43 @@ st.header("Insured Pet")
 
 pet_name = st.text_input("Pet's Name")
 
-pet_dob = st.date_input(
-    "Pet's Date of Birth", 
-    value=None
-)
+st.write("Pet's Date of Birth")
+col1, col2 = st.columns(2)
+
+months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]
+
+with col1:
+    selected_month_name = st.selectbox(
+        "Month", options=months, index=None, placeholder="Month"
+    )
+
+with col2:
+    current_year = datetime.datetime.now().year
+    years = list(range(current_year, current_year - 25, -1))
+    selected_year = st.selectbox(
+        "Year", options=years, index=None, placeholder="Year"
+    )
+
+# Convert to actual datetime.date object
+if selected_month_name and selected_year:
+    # Get the 1-indexed month number (January = 1, February = 2, etc.)
+    month_number = months.index(selected_month_name) + 1
+
+    # Create the datetime object defaulting to the 1st of the month
+    pet_dob = datetime.date(year=selected_year, month=month_number, day=1)
 
 pet_type = st.selectbox("Pet's Type", ["", "Dog", "Cat"])
 breed_list = []
@@ -47,12 +80,16 @@ if pet_type != "":
 
     pet_breed = st.selectbox("Pet's Breed", breed_list)
 
-
-    if pet_breed == "Banned Breeds (See Annex 2)":
+    # Fixed: Changed Annex 2 to Annex 1
+    if pet_breed == "Banned Breeds (See Annex 1)":
         st.error("This breed is not covered under the policy.")
         st.stop()
+    elif pet_breed == "Other (See Annex 1)":
+        st.warning("Please input the breed, input unknow if you are not sure")
+    
 
 pet_sex = st.selectbox("Pet's Sex", ["", "Male", "Female"])
+
 
 pet_sterilization = st.selectbox("Pet's Sterilization Status", ["", "Sterilized", "Not Sterilized"])
 
