@@ -1,6 +1,8 @@
 import streamlit as st
 import datetime
 
+pet_dob = None
+
 st.title("Pet Insurance Application Form")
 
 st.divider()
